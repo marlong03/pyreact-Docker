@@ -1,0 +1,11 @@
+docker compose up
+docker compose build
+docker run -p 8000:8000 backendpyreact
+docker run -p 5173:5173 frontendpyreact
+docker build -t backendpyreact .
+docker build -t frontendpyreact .
+docker-compose up --build
+docker run -d frontend:1.0.0
+docker build -f Dockerfile -t frontend:1.0.0 .
+docker build -t myapp:1.0.0 .
+python -m pip freeze > requirements.txt
