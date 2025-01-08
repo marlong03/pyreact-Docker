@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .  # Debe estar apuntando al directorio que contiene Dockerfile.backend
+      dockerfile: Dockerfile.backend
+    image: myapp4-backend:1.0.0
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./django:/app/django
+    networks:
+      - myapp-network
+    restart: always
+
+  frontend:
+    build:
+      context: .  # Debe estar apuntando al directorio que contiene Dockerfile.frontend
+      dockerfile: Dockerfile.frontend
+    image: myapp4-frontend:1.0.0
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./vite-project:/app/frontend
+    environment:
+      - VITE_HOST=0.0.0.0
+    networks:
+      - myapp-network
+    restart: always
+
+networks:
+  myapp-network:
+    driver: bridge

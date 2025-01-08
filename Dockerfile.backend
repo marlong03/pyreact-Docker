@@ -1,0 +1,27 @@
+FROM python:3.11-slim
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+WORKDIR /app/django/djangoproject
+COPY ./django/requirements.txt .
+RUN python -m pip install --upgrade pip
+RUN python -m pip install -r requirements.txt
+COPY ./django /app/django/djangoproject/
+
+# Backend corre en puerto 8000
+EXPOSE 8000
+
+# FROM node:18 AS frontend
+# WORKDIR /app/vite-project
+# COPY ./vite-project/package*.json ./
+# RUN npm install
+# COPY ./vite-project .
+
+# # # # Frontend corre en puerto 5173
+#  EXPOSE 5173
+
+# Comando para ejecutar ambos servidores
+#CMD ["sh", "-c", "cd /app/django/djangoproject && python manage.py runserver 0.0.0.0:8000 & cd /app/vite-project && npm run dev"]
+#CMD ["sh", "-c", "cd /app/django/djangoproject && python manage.py runserver 0.0.0.0:8000"]
+#WORKDIR /app/django/djangoproject
+#CMD ["python", "manage.py", "runserver"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
